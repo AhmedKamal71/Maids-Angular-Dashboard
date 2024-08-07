@@ -1,1 +1,19 @@
-<p>user-details works!</p>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-primary shadow-sm">
+                <div class="card-header d-flex align-items-center">
+                    <div class="avatar mr-3" [style]="{'background-image': 'url(' + user.avatar + ')'}"></div>
+                    <h5 class="card-title mb-0">{{ user.first_name }} {{ user.last_name }}</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>ID:</strong> {{ user.id }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-primary" (click)="goBack()">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
