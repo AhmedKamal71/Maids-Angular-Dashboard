@@ -1,0 +1,20 @@
+<div class="card border-secondary shadow-sm animated-card">
+    <div class="card-body d-flex align-items-center">
+        <div class="mx-1">#<strong>{{ user.id }}</strong></div>
+        <img [src]="user.avatar" class="rounded-circle mx-3" alt="{{ user.first_name }}" width="60" height="60">
+        <div class="flex-grow-1">
+            <h5 class="card-title">
+                <i class="fas fa-user mr-2"></i> {{ user.first_name }}
+            </h5>
+            <div>
+                <i class="fas fa-envelope mr-2"></i> {{ user.email }}
+            </div>
+            <span class="badge"
+                [ngClass]="{'badge-success': user.status === 'Done', 'badge-warning': user.status === 'Pending'}">
+                {{ user.status }}
+            </span>
+        </div>
+        <button class="mx-1 btn btn-outline-primary btn-sm">Details</button>
+        <button class="mx-1 btn btn-outline-success btn-sm">Edit</button>
+        <button class="mx-1 btn btn-outline-danger btn-sm">Delete</button>
+    </div>
