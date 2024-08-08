@@ -1,9 +1,7 @@
 <div class="container">
     <div class="container mt-4">
-        <h2>Transactions</h2>
-
-        <div class="row">
-            <div class="col-md-12 mb-3" *ngFor="let user of users">
+        <div class="row d-flex justify-content-center ">
+            <div class="col-md-10 mb-3" *ngFor="let user of users" (click)="viewUser(user.id)">
                 <app-user-card [user]="user"></app-user-card>
             </div>
         </div>

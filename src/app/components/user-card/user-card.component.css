@@ -1,6 +1,7 @@
 .card {
     border-radius: 8px;
-    border: 1px solid #ddd;
+    /* border: 2px solid red; */
+    border:none;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     height: auto; /* Adjust height to fit content */
@@ -32,12 +33,4 @@
     border: 2px solid #ddd; /* Border for the image */
 }
 
-.animated-card {
-    position: relative;
-}
 
-.animated-card:hover {
-    transform: scale(1.05); /* Slightly scale up the card */
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Increase shadow for a lifting effect */
-    background-color: #e9e9e99d; /* Light background color change on hover */
-}

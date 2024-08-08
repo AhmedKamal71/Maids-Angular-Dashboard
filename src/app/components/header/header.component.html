@@ -1,5 +1,25 @@
-<div>
-    <h3>Enter User ID</h3>
-    <input class="form-control w-25" placeholder="Search" type="text" [(ngModel)]="searchValue"
-        (ngModelChange)="onSearchChange()">
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 d-flex">
+            <!-- <h5 class="mb-2 text-center">Search User</h5> -->
+            <div class="input-group w-25 m-auto row">
+                <div class="col-1 mt-1">
+                    <img class="search-img" src="	https://cdn-icons-png.flaticon.com/128/149/149852.png" alt="">
+                </div>
+                <div class="col-10">
+                    <input class="form-control" placeholder="Enter User ID" type="text" [(ngModel)]="searchValue"
+                        (ngModelChange)="onSearchChange()">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isLoading$ | async" class="loading-bar mt-4">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="spinner-border mx-2 text-primary" role="status">
+                <span class="sr-only"></span>
+            </div>
+            <span class="ml-3">Loading user data, please wait...</span>
+        </div>
+    </div>
 </div>

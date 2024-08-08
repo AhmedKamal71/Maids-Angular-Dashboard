@@ -1,25 +1,22 @@
-<div class="container mt-4" *ngIf="!userNotFound; else userNotFoundTemplate">
-    <div class="row justify-content-center">
+<div class="container mt-4 d-flex justify-content-center" *ngIf="!userNotFound; else userNotFoundTemplate">
+    <div class="row ">
         <div class="col-md-8">
-            <div class="card border-primary shadow-sm">
-                <div class="card-header d-flex align-items-center">
-                    <div class="avatar mr-3" [style]="{'background-image': 'url(' + user.avatar + ')'}"></div>
-                    <h5 class="card-title mb-0">{{ user.first_name }} {{ user.last_name }}</h5>
-                </div>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" [src]="user.avatar" alt="User Avatar">
                 <div class="card-body">
-                    <p><strong>ID:</strong> {{ user.id }}</p>
-                    <p><strong>Email:</strong> {{ user.email }}</p>
-                </div>
-                <div class="card-footer text-center">
-                    <button class="btn btn-primary" (click)="goBack()">Back</button>
+                    <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                    <p class="card-text"><strong>ID:</strong> {{ user.id }}</p>
+                    <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+                    <a href="#" class="btn btn-primary" (click)="goBack()">Back</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+
 <ng-template #userNotFoundTemplate>
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger mt-3" role="alert">
         User not found. Please check the ID and try again.
     </div>
 </ng-template>

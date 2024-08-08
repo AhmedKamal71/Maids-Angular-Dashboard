@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, finalize } from 'rxjs/operators';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,44 +11,40 @@ export class UserService {
   private apiUrl = 'https://reqres.in/api/users';
   private cache = new Map<string, any>();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private loadingService: LoadingService
+  ) {}
 
   getUsers(page: number): Observable<any> {
     const cacheKey = `users-page-${page}`;
 
-    // Return cached data if available
     if (this.cache.has(cacheKey)) {
       return of(this.cache.get(cacheKey));
     }
 
-    // Fetch data from API, cache it, and return
+    this.loadingService.setLoading(true);
     return this.http.get(`${this.apiUrl}?page=${page}`).pipe(
       map((data) => {
-        // Cache the response
         this.cache.set(cacheKey, data);
         return data;
       }),
-      catchError(this.handleError('getUsers', []))
+      catchError(this.handleError('getUsers', [])),
+      finalize(() => this.loadingService.setLoading(false))
     );
   }
 
   getUserById(id: number): Observable<any> {
     const cacheKey = `user-${id}`;
 
-    // Return cached data if available
     if (this.cache.has(cacheKey)) {
       return of(this.cache.get(cacheKey));
     }
 
-    // Fetch data from API, cache it, and return
+    this.loadingService.setLoading(true);
     return this.http.get(`${this.apiUrl}/${id}`).pipe(
       map((data: any) => {
-        // Check if the data is valid and contains the user info
-        if (data && data.data) {
-          this.cache.set(cacheKey, data);
-          return data;
-        } else {
-          // If no valid data, return a default empty user object
+        if (!data || !data.data) {
           return {
             id: id,
             first_name: '',
@@ -56,23 +53,11 @@ export class UserService {
             avatar: '',
           };
         }
+        this.cache.set(cacheKey, data);
+        return data;
       }),
-      catchError((error) => {
-        // Handle 404 or other errors
-        if (error.status === 404) {
-          console.warn(`User with ID ${id} not found, returning default user.`);
-          return of({
-            id: id,
-            first_name: '',
-            last_name: '',
-            email: '',
-            avatar: '',
-          });
-        }
-        // Handle other errors
-        console.error(`Error fetching user with ID ${id}:`, error);
-        return this.handleError(`getUser id=${id}`)(error);
-      })
+      catchError(this.handleError(`getUser id=${id}`)),
+      finalize(() => this.loadingService.setLoading(false))
     );
   }
 
