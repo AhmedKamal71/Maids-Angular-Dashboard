@@ -19,29 +19,17 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.searchSubject
-      .pipe(
-        debounceTime(300) // Debounce time to limit frequent navigation
-      )
+      .pipe(debounceTime(300)) // Debounce time to limit frequent navigation
       .subscribe((userId) => {
-        // Enhanced logging and error handling
         if (userId) {
-          console.log('Navigating to user with ID:', userId);
-          this.router.navigate([`/user/${userId}`]).catch((err) => {
-            console.error('Navigation error:', err);
-          });
+          this.router.navigate([`/user/${userId}`]);
         } else {
-          console.log('Navigating to home page');
-          this.router.navigate(['/']).catch((err) => {
-            console.error('Navigation error:', err);
-          });
+          this.router.navigate(['/']);
         }
       });
   }
 
-  // Trigger search when input changes
   onSearchChange() {
-    const trimmedValue = this.searchValue.trim();
-    console.log('Triggering search with value:', trimmedValue);
-    this.searchSubject.next(trimmedValue);
+    this.searchSubject.next(this.searchValue.trim());
   }
 }

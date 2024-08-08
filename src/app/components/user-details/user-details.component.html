@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4" *ngIf="!userNotFound; else userNotFoundTemplate">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card border-primary shadow-sm">
@@ -17,3 +17,9 @@
         </div>
     </div>
 </div>
+
+<ng-template #userNotFoundTemplate>
+    <div class="alert alert-danger" role="alert">
+        User not found. Please check the ID and try again.
+    </div>
+</ng-template>

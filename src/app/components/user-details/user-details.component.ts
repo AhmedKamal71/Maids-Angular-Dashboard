@@ -1,28 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-details',
   standalone: true,
-  imports: [],
   templateUrl: './user-details.component.html',
-  styleUrl: './user-details.component.css',
+  styleUrls: ['./user-details.component.css'],
+  imports: [CommonModule],
 })
 export class UserDetailsComponent implements OnInit {
-  user: {
-    id: string;
-    first_name: string;
-    last_name: string;
-    email: string;
-    avatar: string;
-  } = {
+  user: any = {
     id: '',
     first_name: '',
     last_name: '',
     email: '',
     avatar: '',
   };
+  userNotFound = false; // Flag to handle user not found
 
   constructor(
     private route: ActivatedRoute,
@@ -31,12 +27,24 @@ export class UserDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const userId = this.route.snapshot.paramMap.get('id');
-    if (userId) {
-      this.userService.getUserById(+userId).subscribe((data) => {
-        this.user = data.data;
-      });
-    }
+    this.route.paramMap.subscribe((params) => {
+      const userId = params.get('id');
+      if (userId) {
+        this.userService.getUserById(+userId).subscribe(
+          (data) => {
+            if (data && data.data) {
+              this.user = data.data;
+              this.userNotFound = false;
+            } else {
+              this.userNotFound = true;
+            }
+          },
+          () => {
+            this.userNotFound = true;
+          }
+        );
+      }
+    });
   }
 
   goBack() {

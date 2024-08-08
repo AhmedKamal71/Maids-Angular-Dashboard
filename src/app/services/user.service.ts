@@ -41,12 +41,38 @@ export class UserService {
 
     // Fetch data from API, cache it, and return
     return this.http.get(`${this.apiUrl}/${id}`).pipe(
-      map((data) => {
-        // Cache the response
-        this.cache.set(cacheKey, data);
-        return data;
+      map((data: any) => {
+        // Check if the data is valid and contains the user info
+        if (data && data.data) {
+          this.cache.set(cacheKey, data);
+          return data;
+        } else {
+          // If no valid data, return a default empty user object
+          return {
+            id: id,
+            first_name: '',
+            last_name: '',
+            email: '',
+            avatar: '',
+          };
+        }
       }),
-      catchError(this.handleError(`getUser id=${id}`))
+      catchError((error) => {
+        // Handle 404 or other errors
+        if (error.status === 404) {
+          console.warn(`User with ID ${id} not found, returning default user.`);
+          return of({
+            id: id,
+            first_name: '',
+            last_name: '',
+            email: '',
+            avatar: '',
+          });
+        }
+        // Handle other errors
+        console.error(`Error fetching user with ID ${id}:`, error);
+        return this.handleError(`getUser id=${id}`)(error);
+      })
     );
   }
 
