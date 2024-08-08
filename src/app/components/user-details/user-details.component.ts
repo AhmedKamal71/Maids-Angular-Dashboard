@@ -18,7 +18,7 @@ export class UserDetailsComponent implements OnInit {
     email: '',
     avatar: '',
   };
-  userNotFound = false; // Flag to handle user not found
+  userNotFound = false;
 
   constructor(
     private route: ActivatedRoute,

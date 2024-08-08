@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent implements OnInit {
   searchValue: string = '';
   private searchSubject = new Subject<string>();
-  isLoading$ = this.loadingService.loading$; // Bind to loading state
+  isLoading$ = this.loadingService.loading$;
 
   constructor(public router: Router, private loadingService: LoadingService) {}
 

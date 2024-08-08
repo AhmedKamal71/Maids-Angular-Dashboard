@@ -8,7 +8,6 @@ export class HoverAnimationDirective {
   private originalBackgroundColor: string;
 
   constructor(private el: ElementRef, private renderer: Renderer2) {
-    // Capture the original background color on initialization
     this.originalBackgroundColor = this.el.nativeElement.style.backgroundColor;
   }
 

@@ -1,10 +1,9 @@
 .card {
     border-radius: 8px;
-    /* border: 2px solid red; */
     border:none;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-    height: auto; /* Adjust height to fit content */
+    height: auto;
 }
 
 .card-body {
@@ -26,11 +25,11 @@
 }
 
 .card-text i {
-    font-size: 1rem; /* Adjust icon size */
+    font-size: 1rem; 
 }
 
 .rounded-circle {
-    border: 2px solid #ddd; /* Border for the image */
+    border: 2px solid #ddd; 
 }
 
 
